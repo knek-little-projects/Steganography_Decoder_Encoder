@@ -1,6 +1,9 @@
 # Steganography Decoder & Encoder Chrome Extension
 
-Chrome extension (Manifest V3) for encoding and decoding hidden messages in images using LSB (Least Significant Bit) steganography.
+Chrome extension (Manifest V3) for encoding and decoding hidden messages in images using LSB (Least Significant Bit) steganography:
+
+Use this link to install in google chrome:
+- https://chromewebstore.google.com/detail/steganography-decoder-enc/dmbgjpiekcpfkkfdekflejkbncajkkec
 
 ## Features
 
