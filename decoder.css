@@ -41,6 +41,92 @@ body {
   border-bottom: 1px solid var(--border-subtle);
   background: rgba(15, 23, 42, 0.9);
   backdrop-filter: blur(10px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.header-left {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Star rating (shared) ── */
+.star-rating {
+  display: inline-flex;
+  direction: rtl;
+}
+
+.star-rating input {
+  position: absolute;
+  left: -9999px;
+}
+
+.star-rating label {
+  margin: 0;
+  cursor: pointer;
+}
+
+.star-rating label a {
+  display: block;
+}
+
+.star-rating label a svg {
+  margin: 1px;
+  height: 22px;
+  width: 22px;
+  fill: rgba(255, 132, 0, 0.35);
+  transition: fill 0.2s ease;
+}
+
+/* Hover: hovered star + all stars to the left (via ~ in RTL) */
+.star-rating label:hover a svg,
+.star-rating label:hover ~ label a svg {
+  fill: #ffc711;
+}
+
+/* Clicked/checked state */
+.star-rating input:checked ~ label a svg {
+  fill: #ff8400;
+}
+
+/* Large variant for feedback panel */
+.star-rating--large label a svg {
+  height: 36px;
+  width: 36px;
+  margin: 3px;
+}
+
+/* ── Header rating block ── */
+.header-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+
+.header-rating-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+}
+
+/* ── Feedback panel rating block ── */
+.feedback-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.feedback-rating-label {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-muted);
 }
 
 .app-header-title h1 {
@@ -1001,7 +1087,8 @@ button:disabled {
   line-height: 1.2;
   text-align: center;
   white-space: pre;
-  overflow-x: auto;
+  /* overflow-x: auto; */
+  overflow-x: hidden;
 }
 
 .ask-button {
@@ -1009,7 +1096,7 @@ button:disabled {
   padding: 10px 22px;
   font-size: 14px;
   font-weight: 700;
-  background: linear-gradient(135deg, #f97316, #ea580c);
+  background: linear-gradient(135deg, #ebb58f, #c4ab9d);
   color: #fff;
   text-decoration: none;
   letter-spacing: 0.4px;

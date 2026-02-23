@@ -8,15 +8,32 @@
   </head>
   <body>
     <header class="app-header">
-      <div class="app-header-title">
-        <h1>Steganography Decoder & Encoder</h1>
-        <p>Encode and decode hidden messages in images using LSB steganography.</p>
+      <div class="header-left">
+        <div class="app-header-title">
+          <h1>Steganography Decoder & Encoder</h1>
+          <p>Encode and decode hidden messages in images using LSB steganography.</p>
+        </div>
+        <nav class="tabs">
+          <button class="tab-button active" data-tab="decode">Decode</button>
+          <button class="tab-button" data-tab="encode">Encode</button>
+          <button class="tab-button" data-tab="more">Feedback</button>
+        </nav>
       </div>
-      <nav class="tabs">
-        <button class="tab-button active" data-tab="decode">Decode</button>
-        <button class="tab-button" data-tab="encode">Encode</button>
-        <button class="tab-button" data-tab="more">Feedback</button>
-      </nav>
+      <div class="header-rating">
+        <span class="header-rating-label">Rate us</span>
+        <div class="star-rating">
+          <input type="radio" name="hdr-star" id="hdr-star-5" value="5" />
+          <label for="hdr-star-5"><a href="https://chromewebstore.google.com/detail/steganography-decoder-enc/dmbgjpiekcpfkkfdekflejkbncajkkec/reviews" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg></a></label>
+          <input type="radio" name="hdr-star" id="hdr-star-4" value="4" />
+          <label for="hdr-star-4"><a href="https://chromewebstore.google.com/detail/steganography-decoder-enc/dmbgjpiekcpfkkfdekflejkbncajkkec/reviews" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg></a></label>
+          <input type="radio" name="hdr-star" id="hdr-star-3" value="3" />
+          <label for="hdr-star-3"><a href="https://docs.google.com/forms/d/1A8Uig4Q5HfdYpT9EyiJStE9m6Vq02emdTpUXSywwYdU/edit" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg></a></label>
+          <input type="radio" name="hdr-star" id="hdr-star-2" value="2" />
+          <label for="hdr-star-2"><a href="https://docs.google.com/forms/d/1A8Uig4Q5HfdYpT9EyiJStE9m6Vq02emdTpUXSywwYdU/edit" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg></a></label>
+          <input type="radio" name="hdr-star" id="hdr-star-1" value="1" />
+          <label for="hdr-star-1"><a href="https://docs.google.com/forms/d/1A8Uig4Q5HfdYpT9EyiJStE9m6Vq02emdTpUXSywwYdU/edit" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg></a></label>
+        </div>
+      </div>
     </header>
 
     <main class="app-main">
@@ -354,18 +371,44 @@
         <div class="more-features-content">
           <pre class="ascii-art">
  _____ _____ _     _        _   _ ____       _    _   _ __   __ _____ _   _ ___ _   _  ____
-|_   _| ____| |   | |      | | | / ___|     / \  | \ | |\ \ / /|_   _| | | |_ _| \ | |/ ___|
-  | | |  _| | |   | |      | | | \___ \    / _ \ |  \| | \ V /   | | | |_| || ||  \| | |  _
-  | | | |___| |___| |___   | |_| |___) |  / ___ \| |\  |  | |    | | |  _  || || |\  | |_| |
-  |_| |_____|_____|_____|   \___/|____/  /_/   \_\_| \_|  |_|    |_| |_| |_|___|_| \_|\____|
-          </pre>
+ ░▒▓███████▓▒░▒▓████████▓▒░▒▓████████▓▒░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓███████▓▒░ ░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓███████▓▒░ ░▒▓██████▓▒░░▒▓███████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓█▓▒░         ░▒▓█▓▒░   ░▒▓█▓▒░     ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓█▓▒░         ░▒▓█▓▒░   ░▒▓█▓▒░     ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+ ░▒▓██████▓▒░   ░▒▓█▓▒░   ░▒▓██████▓▒░░▒▓█▓▒▒▓███▓▒░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒▒▓███▓▒░▒▓███████▓▒░░▒▓████████▓▒░▒▓███████▓▒░░▒▓████████▓▒░░▒▓██████▓▒░  
+       ░▒▓█▓▒░  ░▒▓█▓▒░   ░▒▓█▓▒░     ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░  ░▒▓█▓▒░     
+       ░▒▓█▓▒░  ░▒▓█▓▒░   ░▒▓█▓▒░     ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░  ░▒▓█▓▒░     
+░▒▓███████▓▒░   ░▒▓█▓▒░   ░▒▓████████▓▒░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░  ░▒▓█▓▒░     
+                                                                                                                                                                          
+                                                                                                                                                                          
+</pre>
+
+          <div class="feedback-rating">
+            <p class="feedback-rating-label">Enjoying the extension? Rate us!</p>
+            <div class="star-rating star-rating--large">
+              <input type="radio" name="fb-star" id="fb-star-5" value="5" />
+              <label for="fb-star-5"><a href="https://chromewebstore.google.com/detail/steganography-decoder-enc/dmbgjpiekcpfkkfdekflejkbncajkkec/reviews" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg></a></label>
+              <input type="radio" name="fb-star" id="fb-star-4" value="4" />
+              <label for="fb-star-4"><a href="https://chromewebstore.google.com/detail/steganography-decoder-enc/dmbgjpiekcpfkkfdekflejkbncajkkec/reviews" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg></a></label>
+              <input type="radio" name="fb-star" id="fb-star-3" value="3" />
+              <label for="fb-star-3"><a href="https://docs.google.com/forms/d/1A8Uig4Q5HfdYpT9EyiJStE9m6Vq02emdTpUXSywwYdU/edit" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg></a></label>
+              <input type="radio" name="fb-star" id="fb-star-2" value="2" />
+              <label for="fb-star-2"><a href="https://docs.google.com/forms/d/1A8Uig4Q5HfdYpT9EyiJStE9m6Vq02emdTpUXSywwYdU/edit" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg></a></label>
+              <input type="radio" name="fb-star" id="fb-star-1" value="1" />
+              <label for="fb-star-1"><a href="https://docs.google.com/forms/d/1A8Uig4Q5HfdYpT9EyiJStE9m6Vq02emdTpUXSywwYdU/edit" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg></a></label>
+            </div>
+          </div>
+
+          <div>
+            OR
+          </div>
+
           <a
-            class="ask-button"
+            class="xask-button"
             href="https://forms.gle/2KnvLNKiq1zYNhFP7"
             target="_blank"
             rel="noopener noreferrer"
           >
-            TELL
+            Submit a bug or feature request
           </a>
         </div>
       </section>
