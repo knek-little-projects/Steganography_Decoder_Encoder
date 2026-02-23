@@ -605,6 +605,12 @@ button:disabled {
   border-radius: var(--radius-md);
 }
 
+.encoded-preview img {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: var(--radius-md);
+}
+
 .candidates-section {
   margin-top: 12px;
   display: flex;

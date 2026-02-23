@@ -5,12 +5,15 @@ let currentImageDataForEncode = null;
 let originalImageDataForEncode = null; // Unresized original
 let currentEncodeMethod = 'jpeg-dct'; // Track current method for download
 let currentJpegQuality = 0.95; // Track JPEG quality for download
+let currentEncodedBlob = null; // Stores the final-format blob for preview & download
+let currentPreviewBlobUrl = null; // Object URL for preview img
 
 const messageInput = document.getElementById('messageInput');
 const charCount = document.getElementById('charCount');
 const encodeButton = document.getElementById('encodeButton');
 const encodeStatusLabel = document.getElementById('encodeStatusLabel');
 const encodedCanvas = document.getElementById('encodedCanvas');
+const encodedPreviewImg = document.getElementById('encodedPreviewImg');
 const encodeDownloadButton = document.getElementById('encodeDownloadButton');
 const capacityInfo = document.getElementById('capacityInfo');
 const capacityText = document.getElementById('capacityText');
@@ -61,31 +64,97 @@ function setEncodeStatus(message, isError = false) {
 }
 
 function downloadEncodedImage() {
-  if (!encodedCanvas || !encodedCanvas.width || !encodedCanvas.height) {
-    return;
-  }
+  if (!currentEncodedBlob) return;
 
-  if (currentEncodeMethod === 'jpeg-dct') {
-    const quality = currentJpegQuality;
-    encodedCanvas.toBlob((blob) => {
-      if (!blob) return;
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'encoded-image.jpg';
-      a.click();
+  const ext = currentEncodeMethod === 'jpeg-dct' ? 'jpg' : 'png';
+  const url = URL.createObjectURL(currentEncodedBlob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `encoded-image.${ext}`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/**
+ * Convert canvas contents to a blob of the target format, then reload
+ * that blob back onto the canvas so the preview matches the actual file.
+ */
+function canvasToBlob(canvas, mimeType, quality) {
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => resolve(blob), mimeType, quality);
+  });
+}
+
+/** Load a Blob (JPEG/PNG) back into an ImageData via an off-screen canvas. */
+function blobToImageData(blob) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = () => {
+      try {
+        const c = document.createElement('canvas');
+        c.width = img.naturalWidth;
+        c.height = img.naturalHeight;
+        const cx = c.getContext('2d');
+        cx.drawImage(img, 0, 0);
+        resolve(cx.getImageData(0, 0, c.width, c.height));
+      } catch (e) {
+        reject(e);
+      } finally {
+        URL.revokeObjectURL(url);
+      }
+    };
+    img.onerror = () => {
       URL.revokeObjectURL(url);
-    }, 'image/jpeg', quality);
-  } else {
-    encodedCanvas.toBlob((blob) => {
-      if (!blob) return;
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'encoded-image.png';
-      a.click();
-      URL.revokeObjectURL(url);
-    }, 'image/png');
+      reject(new Error('Failed to load JPEG blob back as image'));
+    };
+    img.src = url;
+  });
+}
+
+/**
+ * Encode a message with JPEG DCT steganography and return a ready Blob.
+ *
+ * Uses a double-pass technique so the stego data survives browser JPEG
+ * re-compression:
+ *   Pass 1 – embed message → JPEG-compress → decode back to pixels
+ *            (pixels are now "JPEG-stable")
+ *   Pass 2 – embed message again into those stable pixels → JPEG-compress
+ *            (this time the compression barely changes the coefficients)
+ */
+async function jpegEncodeToBlob(imageData, message, { step, fillWithZeros, quality }) {
+  // --- Pass 1: encode + compress to get JPEG-stable pixels ---
+  const firstPass = jpegEncodeCore(imageData, message, { step, fillWithZeros });
+
+  const tmpCanvas = document.createElement('canvas');
+  tmpCanvas.width = firstPass.width;
+  tmpCanvas.height = firstPass.height;
+  const tmpCtx = tmpCanvas.getContext('2d');
+  tmpCtx.putImageData(firstPass, 0, 0);
+
+  const firstBlob = await canvasToBlob(tmpCanvas, 'image/jpeg', quality);
+  const stablePixels = await blobToImageData(firstBlob);
+
+  // --- Pass 2: re-encode message into JPEG-stable pixels ---
+  const secondPass = jpegEncodeCore(stablePixels, message, { step, fillWithZeros });
+
+  tmpCtx.putImageData(secondPass, 0, 0);
+  return canvasToBlob(tmpCanvas, 'image/jpeg', quality);
+}
+
+/**
+ * Show the encoded blob in the preview <img> element.
+ * The blob is in the final target format (JPEG for DCT, PNG for LSB),
+ * so "Save image as" gives the correct format.
+ */
+function showBlobInPreview(blob) {
+  // Revoke previous URL to avoid memory leaks
+  if (currentPreviewBlobUrl) {
+    URL.revokeObjectURL(currentPreviewBlobUrl);
+  }
+  currentPreviewBlobUrl = URL.createObjectURL(blob);
+  if (encodedPreviewImg) {
+    encodedPreviewImg.src = currentPreviewBlobUrl;
   }
 }
 
@@ -254,8 +323,6 @@ if (encodeButton) {
     setEncodeStatus('Encoding...');
     encodeButton.disabled = true;
 
-    let encodedImageData;
-
     if (method === 'jpeg-dct') {
       const step = dctRobustnessInput ? parseInt(dctRobustnessInput.value, 10) : 50;
       const fillZeros = dctFillWithZerosInput ? dctFillWithZerosInput.checked : false;
@@ -263,10 +330,11 @@ if (encodeButton) {
         ? parseInt(dctJpegQualityInput.value, 10) / 100
         : 0.95;
 
-      encodedImageData = jpegEncodeCore(currentImageDataForEncode, message, {
-        step,
-        fillWithZeros: fillZeros,
-      });
+      // Double-pass encode → ready JPEG blob
+      currentEncodedBlob = await jpegEncodeToBlob(
+        currentImageDataForEncode, message,
+        { step, fillWithZeros: fillZeros, quality: currentJpegQuality },
+      );
     } else {
       const config = {
         bitsPerChannel: parseInt(encodeBitsPerChannelInput.value, 10) || 1,
@@ -282,13 +350,19 @@ if (encodeButton) {
         throw new Error('At least one channel must be selected');
       }
 
-      encodedImageData = encodeLSBCore(currentImageDataForEncode, message, config);
+      const encodedImageData = encodeLSBCore(currentImageDataForEncode, message, config);
+
+      encodedCanvas.width = encodedImageData.width;
+      encodedCanvas.height = encodedImageData.height;
+      const ctx = encodedCanvas.getContext('2d');
+      ctx.putImageData(encodedImageData, 0, 0);
+
+      currentEncodedBlob = await canvasToBlob(encodedCanvas, 'image/png');
     }
 
-    encodedCanvas.width = encodedImageData.width;
-    encodedCanvas.height = encodedImageData.height;
-    const ctx = encodedCanvas.getContext('2d');
-    ctx.putImageData(encodedImageData, 0, 0);
+    if (currentEncodedBlob) {
+      showBlobInPreview(currentEncodedBlob);
+    }
 
     if (encodedPreviewSection) {
       encodedPreviewSection.style.display = 'flex';
