@@ -278,32 +278,43 @@ function applyCandidate(candidate) {
     if (decodeButton) decodeButton.disabled = false;
   }
 
-  // Apply candidate parameters to form
   const { bitsPerChannel, useR, useG, useB, order, encoding } = candidate.params;
-  
-  bitsPerChannelInput.value = String(bitsPerChannel);
-  channelRInput.checked = useR;
-  channelGInput.checked = useG;
-  channelBInput.checked = useB;
-  
-  // Set pixel order
-  for (const radio of pixelOrderRadios) {
-    radio.checked = radio.value === order;
-  }
-  
-  // Set encoding
-  for (const radio of encodingRadios) {
-    radio.checked = radio.value === encoding;
-  }
-  
-  ensureAtLeastOneChannel();
 
-  // Expand manual decode options and show selected parameters
-  if (manualDecodeOptions && manualDecodeToggle) {
-    manualDecodeOptions.style.display = 'block';
-    const arrow = manualDecodeToggle.querySelector('.toggle-arrow');
-    if (arrow) {
-      arrow.textContent = '▼';
+  if (candidate._isJpegDct) {
+    // JPEG DCT candidate — hide LSB manual options (they are irrelevant)
+    if (manualDecodeOptions) {
+      manualDecodeOptions.style.display = 'none';
+    }
+    if (manualDecodeToggle) {
+      const arrow = manualDecodeToggle.querySelector('.toggle-arrow');
+      if (arrow) arrow.textContent = '▶';
+    }
+  } else {
+    // Apply LSB candidate parameters to form
+    bitsPerChannelInput.value = String(bitsPerChannel);
+    channelRInput.checked = useR;
+    channelGInput.checked = useG;
+    channelBInput.checked = useB;
+
+    // Set pixel order
+    for (const radio of pixelOrderRadios) {
+      radio.checked = radio.value === order;
+    }
+
+    // Set encoding
+    for (const radio of encodingRadios) {
+      radio.checked = radio.value === encoding;
+    }
+
+    ensureAtLeastOneChannel();
+
+    // Expand manual decode options and show selected parameters
+    if (manualDecodeOptions && manualDecodeToggle) {
+      manualDecodeOptions.style.display = 'block';
+      const arrow = manualDecodeToggle.querySelector('.toggle-arrow');
+      if (arrow) {
+        arrow.textContent = '▼';
+      }
     }
   }
 
